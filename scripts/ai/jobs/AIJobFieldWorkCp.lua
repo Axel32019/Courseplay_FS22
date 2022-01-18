@@ -32,7 +32,7 @@ function AIJobFieldWorkCp.new(isServer, customMt)
 	local ai = 	g_currentMission.aiJobTypeManager
 	ai:getJobTypeByIndex(ai:getJobTypeIndexByName("FIELDWORK_CP")).title = g_i18n:getText(AIJobFieldWorkCp.translations.JobName)
 
-	self.cpJobParameters = CpJobParameters()
+	self.cpJobParameters = CpJobParameters(self)
 
 	CpSettingsUtil.generateAiJobGuiElementsFromSettingsTable(self.cpJobParameters.settingsBySubTitle,self,self.cpJobParameters)
 	return self
@@ -163,7 +163,6 @@ function AIJobFieldWorkCp:getIsAvailableForVehicle(vehicle)
 	return vehicle.getCanStartCpFieldWork and vehicle:getCanStartCpFieldWork()
 end
 
-
 function AIJobFieldWorkCp:resetStartPositionAngle(vehicle)
 	local x, _, z = getWorldTranslation(vehicle.rootNode) 
 	local dirX, _, dirZ = localDirectionToWorld(vehicle.rootNode, 0, 0, 1)
@@ -171,4 +170,11 @@ function AIJobFieldWorkCp:resetStartPositionAngle(vehicle)
 	self.positionAngleParameter:setPosition(x, z)
 	local angle = MathUtil.getYRotationFromDirection(dirX, dirZ)
 	self.positionAngleParameter:setAngle(angle)
+end
+function AIJobFieldWorkCp:getVehicle()
+	self.vehicleParameter:getVehicle()
+end
+
+function AIJobFieldWorkCp:setVehicle(v)
+	self.vehicleParameter:setVehicle(v)
 end

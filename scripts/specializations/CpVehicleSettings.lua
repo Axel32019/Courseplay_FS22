@@ -68,13 +68,13 @@ function CpVehicleSettings:onPostAttachImplement(object)
                 CpUtil.getName(object), lowerEarly)
         spec.lowerImplementEarly:setValue(lowerEarly)
     end
+    CpVehicleSettings.validateSettings(self)
 end
 
 function CpVehicleSettings:onPreDetachImplement(implement)
     local spec = self.spec_cpVehicleSettings
     local raiseLate = g_vehicleConfigurations:get(implement.object, 'raiseLate')
     if raiseLate then
-        CpUtil.debugVehicle(CpDebug.DBG_IMPLEMENTS, self, '%s: resetting raise implement to default early',
                 CpUtil.getName(implement.object))
         spec.raiseImplementLate:setValue(false)
     end
@@ -84,9 +84,9 @@ function CpVehicleSettings:onPreDetachImplement(implement)
                 CpUtil.getName(implement.object))
         spec.lowerImplementEarly:setValue(false)
     end
+    CpVehicleSettings.validateSettings(self)
 end
 
---- Loads the generic settings setup from an xmlFile.
 function CpVehicleSettings.loadSettingsSetup()
     local filePath = Utils.getFilename("config/VehicleSettingsSetup.xml", g_Courseplay.BASE_DIRECTORY)
     CpSettingsUtil.loadSettingsFromSetup(CpVehicleSettings,filePath)
@@ -123,6 +123,13 @@ end
 --- Callback raised by a setting and executed as an vehicle event.
 function CpVehicleSettings:raiseCallback(callbackStr)
     SpecializationUtil.raiseEvent(self,callbackStr)
+end
+
+function CpVehicleSettings:validateSettings()
+    local spec = self.spec_cpVehicleSettings
+    for i,setting in ipairs(spec.settings) do 
+        setting:validateCurrentValue()
+    end
 end
 
 ------------------------------------------------------------------------------------------------------------------------

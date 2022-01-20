@@ -95,6 +95,7 @@ InGameMenuAIFrame.updateContextInputBarVisibility = Utils.appendedFunction(InGam
 function InGameMenuAIFrame:onClickGenerateFieldWorkCourse()
 	if CpInGameMenuAIFrameExtended.getCanGenerateCourse(self) then 
 		self.currentJob:onClickGenerateFieldWorkCourse()
+		--CpSettingsUtil.updateAiParameters(self.currentJobElements)
 	end
 end
 
@@ -127,7 +128,8 @@ function InGameMenuAIFrame:onClickOpenCloseCourseGenerator()
 			self.ingameMap:registerActionEvents()
 			self.mode = InGameMenuAIFrame.MODE_CREATE
 			self:setJobMenuVisible(true)
-			FocusManager:setFocus(self.jobTypeElement)
+			self.currentJob:getCpJobParameters():validateSettings()
+			CpSettingsUtil.updateAiParameters(self.currentJobElements)
 			CpInGameMenuAIFrameExtended.unbindCourseGeneratorSettings(self)
 		else
 			self.mode = CpInGameMenuAIFrameExtended.MODE_COURSE_GENERATOR

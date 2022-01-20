@@ -341,6 +341,15 @@ function CpSettingsUtil.generateAiJobGuiElementsFromSettingsTable(settingsBySubT
 	end
 end
 
+function CpSettingsUtil.updateAiParameters(currentJobElements)
+	for i,element in pairs(currentJobElements) do 
+		if element.setDataSource then
+			element:setDataSource(element.aiParameter)
+			element:setDisabled(element.aiParameter:getIsDisabled())
+		end
+	end
+end
+
 
 --- Raises an event for all settings.
 ---@param settings table

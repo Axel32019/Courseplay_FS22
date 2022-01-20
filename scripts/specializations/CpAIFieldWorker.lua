@@ -32,7 +32,6 @@ end
 function CpAIFieldWorker.registerEventListeners(vehicleType)
 	SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", CpAIFieldWorker)
 	SpecializationUtil.registerEventListener(vehicleType, "onLoad", CpAIFieldWorker)
-    SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", CpAIFieldWorker)
 --    SpecializationUtil.registerEventListener(vehicleType, "getStartAIJobText", CpAIFieldWorker)
     SpecializationUtil.registerEventListener(vehicleType, "onEnterVehicle", CpAIFieldWorker)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", CpAIFieldWorker)
@@ -44,6 +43,7 @@ function CpAIFieldWorker.registerEventListeners(vehicleType)
 
     SpecializationUtil.registerEventListener(vehicleType, "onPostDetachImplement", CpAIFieldWorker)
     SpecializationUtil.registerEventListener(vehicleType, "onPostAttachImplement", CpAIFieldWorker)
+    SpecializationUtil.registerEventListener(vehicleType, 'onCpCourseChange', CpAIFieldWorker)
 end
 
 function CpAIFieldWorker.registerFunctions(vehicleType)
@@ -90,10 +90,6 @@ function CpAIFieldWorker:onLoad(savegame)
     spec.cpJobStartAtLastWp:getCpJobParameters().startAt:setValue(CpJobParameters.START_AT_LAST_POINT)
 end
 
-function CpAIFieldWorker:onPostLoad(savegame)
-
-end
-
 function CpAIFieldWorker:saveToXMLFile(xmlFile, baseKey, usedModNames)
    
 end
@@ -104,6 +100,11 @@ end
 
 function CpAIFieldWorker:onLeaveVehicle(isControlling)
    
+end
+
+function CpAIFieldWorker:onCpCourseChange()
+    local spec = self.spec_cpAIFieldWorker
+    spec.cpJob:getCpJobParameters():validateSettings()
 end
 
 function CpAIFieldWorker:onPostDetachImplement()

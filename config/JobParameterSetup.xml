@@ -25,16 +25,20 @@
 		</Setting>
 	</SettingSubTitle>
 	<SettingSubTitle title="laneOffset">
-		<Setting classType="AIParameterSettingList" name="laneOffset" default="1">
+		<Setting classType="AIParameterSettingList" name="laneOffset" default="0" isDisabled ="noMultiToolsCourseSelected">
 			<Values>
-				<Value name="LANE_CENTER">1</Value>
-				<Value name="LANE_RIGHT">2</Value>
-				<Value name="LANE_LEFT">3</Value>
+				<Value name="LANE_LEFT_2" isDisabled ="lessThanThreeMultiTools">-2</Value>
+				<Value name="LANE_LEFT">-1</Value>
+				<Value name="LANE_CENTER" isDisabled ="evenNumberOfMultiTools">0</Value>
+				<Value name="LANE_RIGHT">1</Value>
+				<Value name="LANE_RIGHT_2" isDisabled ="lessThanThreeMultiTools">2</Value>
 			</Values>
 			<Texts>
+				<Text>left_2</Text>
+				<Text>left</Text>
 				<Text>center</Text>
 				<Text>right</Text>
-				<Text>left</Text>
+				<Text>right_2</Text>
 			</Texts>
 		</Setting>
 	</SettingSubTitle>

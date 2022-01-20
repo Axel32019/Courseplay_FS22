@@ -72,6 +72,7 @@
 				<Text>up_down_rows</Text>
 			</Texts>
 		</Setting>
+		<Setting classType="AIParameterSettingList" name="multiTools" min="1" max="5" default="1"/>
 		<Setting classType="AIParameterSettingList" name="islandBypassMode">
 			<Values>
 				<Value name="ISLAND_BYPASS_MODE_CIRCLE">3</Value>

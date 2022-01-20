@@ -152,11 +152,10 @@ end
 function AIParameterSettingList:validateCurrentValue()
 	local disabledFunc = self.disabledValuesFuncs and self.disabledValuesFuncs[self.values[self.current]]
 	if disabledFunc ~= nil and self:hasCallback(disabledFunc) then 
-		if self:getCallback(disabledFunc) then
+		if self:getCallback(disabledFunc) then 
 			self:debug("value %s is disabled",tostring(self.values[self.current]))
 			local new = self:checkAndSetValidValue(self.current+1)
 			self:setToIx(new)
-			return
 		end
 	end
 	self:debug("value %s is valid",tostring(self.values[self.current]))
@@ -420,6 +419,10 @@ function AIParameterSettingList:getIsDisabled()
 		return self:getCallback(self.data.isDisabledFunc)
 	end
 	return self.isDisabled
+end
+
+function AIParameterSettingList:getCanBeChanged()
+	return not self:getIsDisabled()
 end
 
 function AIParameterSettingList:getIsVisible()

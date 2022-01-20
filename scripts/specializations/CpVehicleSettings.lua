@@ -75,6 +75,7 @@ function CpVehicleSettings:onPreDetachImplement(implement)
     local spec = self.spec_cpVehicleSettings
     local raiseLate = g_vehicleConfigurations:get(implement.object, 'raiseLate')
     if raiseLate then
+        CpUtil.debugVehicle(CpDebug.DBG_IMPLEMENTS, self, '%s: resetting raise implement to default early',
                 CpUtil.getName(implement.object))
         spec.raiseImplementLate:setValue(false)
     end

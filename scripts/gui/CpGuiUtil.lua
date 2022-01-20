@@ -232,12 +232,3 @@ function CpGuiUtil.setCameraRotation(vehicle, enableRotation, savedRotatableInfo
 		camera.isRotatable = isRotatable
 	end
 end
-
-local function fixFocus(self)
-	FocusManager:loadElementFromCustomValues(self.boxLayout)
-	self.boxLayout:invalidateLayout()
-	self:setSoundSuppressed(true)
-	FocusManager:setFocus(self.boxLayout)
-	self:setSoundSuppressed(false)
-end
---InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen,fixFocus)

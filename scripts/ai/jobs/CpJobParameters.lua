@@ -50,3 +50,26 @@ function CpJobParameters:isBaleFinderNotAllowed()
         return not hasValidImplement
     end
 end
+
+function CpJobParameters:getNumberOfMultiTools()
+    local vehicle = self.job:getVehicle()
+    if vehicle then 
+        local course = vehicle:getFieldWorkCourse()
+        if course then 
+            return course:getNumberOfMultiTools() or 1
+        end
+    end
+    return 1
+end
+
+function CpJobParameters:noMultiToolsCourseSelected()
+    return self:getNumberOfMultiTools() <= 1
+end
+
+function CpJobParameters:evenNumberOfMultiTools()
+    return self:getNumberOfMultiTools() %2 == 0
+end
+
+function CpJobParameters:lessThanThreeMultiTools()
+    return self:getNumberOfMultiTools() < 4
+end

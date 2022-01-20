@@ -60,16 +60,28 @@ function AIDriveStrategyFieldWorkCourse:delete()
     self:rememberWaypointToContinueFieldWork()
 end
 
+function AIDriveStrategyFieldWorkCourse:getGeneratedCourse(jobParameters)
+    local course = self.vehicle:getFieldWorkCourse()
+    local laneNumber = jobParameters.laneOffset:getValue()
+    local width = course:getWorkWidth() / course:getNumberOfMultiTools()
+    local offsetCourse = course:calculateOffsetCourse(
+                                            course:getNumberOfMultiTools(),
+                                            laneNumber, width,
+                                            self.settings.symmetricLaneChange:getValue())
+    
+    return offsetCourse
+end
+
 --- If the startAt setting is START_AT_LAST_POINT and a waypoint ix was saved the start at this wp.
-function AIDriveStrategyFieldWorkCourse:getStartingPointWaypointIx(course,startAt)
+function AIDriveStrategyFieldWorkCourse:getStartingPointWaypointIx(course, startAt)
     if startAt == CpJobParameters.START_AT_LAST_POINT then 
         local lastWpIx = self:getRememberedWaypointToContinueFieldWork()
         if lastWpIx then 
-            self:debug('Starting course at the last waypoint %d',lastWpIx)
+            self:debug('Starting course at the last waypoint %d', lastWpIx)
             return lastWpIx
         end
     end
-    return AIDriveStrategyFieldWorkCourse:superClass().getStartingPointWaypointIx(self,course,startAt)
+    return AIDriveStrategyFieldWorkCourse:superClass().getStartingPointWaypointIx(self, course, startAt)
 end
 
 function AIDriveStrategyFieldWorkCourse:start(course, startIx)

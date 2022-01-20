@@ -373,6 +373,10 @@ function Course:getWaypoint(ix)
 	return self.waypoints[ix]
 end
 
+function Course:getNumberOfMultiTools()
+	return self.multiTools
+end
+
 --- Is this a temporary course? Can be used to differentiate between recorded and dynamically generated courses
 -- The Course() object does not use this attribute for anything
 function Course:isTemporary()

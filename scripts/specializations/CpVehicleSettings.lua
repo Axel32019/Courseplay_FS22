@@ -129,7 +129,7 @@ end
 function CpVehicleSettings:validateSettings()
     local spec = self.spec_cpVehicleSettings
     for i,setting in ipairs(spec.settings) do 
-        setting:validateCurrentValue()
+        setting:refresh()
     end
 end
 

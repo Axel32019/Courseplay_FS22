@@ -231,7 +231,7 @@ function CpCourseManager:drawCoursePlot(map)
 end
 
 function CpCourseManager:onDraw()
---    self.courseDisplay:draw()
+    --- Draw debug information of the generated fieldwork course.
     local course = self:getFieldWorkCourse()
     if course then 
         if CpUtil.isVehicleDebugActive(self) and CpDebug:isChannelActive(CpDebug.DBG_COURSES) then

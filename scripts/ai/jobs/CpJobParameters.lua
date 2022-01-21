@@ -38,7 +38,7 @@ end
 
 function CpJobParameters:validateSettings()
     for i,setting in ipairs(self.settings) do 
-        setting:validateCurrentValue()
+        setting:refresh()
     end
 end
 

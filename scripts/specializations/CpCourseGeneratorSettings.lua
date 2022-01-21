@@ -132,6 +132,6 @@ end
 function CpCourseGeneratorSettings:validateSettings()
     local spec = self.spec_cpCourseGeneratorSettings
     for i,setting in ipairs(spec.settings) do 
-        setting:validateCurrentValue()
+        setting:refresh()
     end
 end

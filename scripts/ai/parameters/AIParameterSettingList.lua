@@ -9,15 +9,21 @@ function AIParameterSettingList.new(data,vehicle,class,customMt)
 	self.vehicle = vehicle
 	self.klass = class
 	self.name = data.name
+	--- We keep the config data, as we might need to fall back to it.
+	--- For example to reenable specific values after they were deactivated in self:refresh().  
 	self.data = data
 	self.textInputAllowed = data.textInputAllowed
 	if next(data.values) ~=nil then
 		self.values = table.copy(data.values)
 		self.texts = table.copy(data.texts)
 	else
-		self.values = {}
-		self.texts = {}
-		AIParameterSettingList.generateValues(self,self.values,self.texts,data.min,data.max,data.incremental,data.textStr,data.unit)
+		self.data.values = {}
+		self.data.texts = {}
+		AIParameterSettingList.generateValues(self,self.data.values,self.data.texts,data.min,data.max,data.incremental,data.textStr,data.unit)
+		self.values = table.copy(self.data.values)
+		if self.texts ~= nil then
+			self.texts = table.copy(self.data.texts)
+		end
 		self.textInputAllowed = true
 	end
 
@@ -30,8 +36,9 @@ function AIParameterSettingList.new(data,vehicle,class,customMt)
 	self.previous = 1
 
 	if self.texts == nil or next(self.texts) == nil then
-		self.texts = {}
-		AIParameterSettingList.enrichTexts(self,data.unit)
+		self.data.texts = {}
+		AIParameterSettingList.enrichTexts(self,self.data.texts,data.unit)
+		self.texts = table.copy(self.data.texts)
 	end
 
 	if data.default ~=nil then
@@ -101,13 +108,13 @@ function AIParameterSettingList:generateValues(values,texts,min,max,inc,textStr,
 end
 
 --- Enriches texts with values of values, if they are not explicit declared. 
-function AIParameterSettingList:enrichTexts(unit)
+function AIParameterSettingList:enrichTexts(texts,unit)
 	for i,value in ipairs(self.values) do 
 		local text = tostring(value)
 		if unit then 
 			text = text..AIParameterSettingList.UNITS_TEXTS[unit](value)
 		end
-		self.texts[i] = text
+		texts[i] = text
 	end
 end
 
@@ -149,17 +156,33 @@ function AIParameterSettingList:onChange()
 	end
 end
 
-function AIParameterSettingList:validateCurrentValue()
-	local disabledFunc = self.disabledValuesFuncs and self.disabledValuesFuncs[self.values[self.current]]
+function AIParameterSettingList:isValueDisabled(value)
+	local disabledFunc = self.disabledValuesFuncs and self.disabledValuesFuncs[value]
 	if disabledFunc ~= nil and self:hasCallback(disabledFunc) then 
 		if self:getCallback(disabledFunc) then 
-			self:debug("value %s is disabled",tostring(self.values[self.current]))
-			local new = self:checkAndSetValidValue(self.current+1)
-			self:setToIx(new)
-		end
+			self:debug("value %s is disabled",tostring(value))
+			return true
+		end 
 	end
-	self:debug("value %s is valid",tostring(self.values[self.current]))
+	self:debug("value %s is valid",tostring(value))
+end
 
+--- Excludes deactivated values from the current values and texts tables.
+function AIParameterSettingList:refresh()
+	self.values = {}
+	self.texts = {}
+	for ix,v in ipairs(self.data.values) do 
+		if not self:isValueDisabled(v) then
+			table.insert(self.values,v)
+			table.insert(self.texts,self.data.texts[ix])
+		end	
+	end
+	self:validateCurrentValue()
+end
+
+function AIParameterSettingList:validateCurrentValue()
+	local new = self:checkAndSetValidValue(self.current)
+	self:setToIx(new)
 end
 
 --- Refresh the texts, if it depends on a changeable measurement unit.
@@ -255,7 +278,7 @@ function AIParameterSettingList:getValue()
 end
 
 function AIParameterSettingList:getString()
-	return self.texts[self.current]
+	return self.texts[self.current] or ""
 end
 
 --- Set the next value

@@ -232,6 +232,16 @@ end
 
 function CpCourseManager:onDraw()
 --    self.courseDisplay:draw()
+    local course = self:getFieldWorkCourse()
+    if course then 
+        if CpUtil.isVehicleDebugActive(self) and CpDebug:isChannelActive(CpDebug.DBG_COURSES) then
+            local info = {
+                title = self:getCurrentCpCourseName(),
+                content = course:getDebugTable()
+            }
+            CpDebug:drawVehicleDebugTable(self,{info})
+        end
+    end
 end
 
 function CpCourseManager:onReadStream(streamId)

@@ -280,6 +280,22 @@ function Course:init(vehicle, waypoints, temporary, first, last)
 	self:enrichWaypointData()
 end
 
+function Course:getDebugTable()
+	return {
+		{name = "numWp",value=self:getNumberOfWaypoints()},
+		{name = "workWidth",value=self.workWidth},
+		{name = "curWpIx",value=self:getCurrentWaypointIx()},
+		{name = "length",value=self.length},
+		{name = "numWp",value=self.totalTurns},
+		{name = "offsetX",value=self.offsetX},
+		{name = "offsetZ",value=self.offsetZ},
+		{name = "multiTools",value=self.multiTools},
+		{name = "numHeadlands",value=self.numberOfHeadlands},
+		{name = "totalTurns",value=self.totalTurns},
+	}
+	
+end
+
 function Course:isFieldworkCourse()
 	return (self.workWidth and self.workWidth > 0) or (self.numberOfHeadlands and self.numberOfHeadlands > 0)
 end

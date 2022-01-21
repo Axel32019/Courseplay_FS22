@@ -28,9 +28,9 @@
 		<Setting classType="AIParameterSettingList" name="laneOffset" default="0" isDisabled ="noMultiToolsCourseSelected">
 			<Values>
 				<Value name="LANE_LEFT_2" isDisabled ="lessThanThreeMultiTools">-2</Value>
-				<Value name="LANE_LEFT">-1</Value>
+				<Value name="LANE_LEFT"	isDisabled = "noMultiToolsCourseSelected">-1</Value>
 				<Value name="LANE_CENTER" isDisabled ="evenNumberOfMultiTools">0</Value>
-				<Value name="LANE_RIGHT">1</Value>
+				<Value name="LANE_RIGHT" isDisabled = "noMultiToolsCourseSelected">1</Value>
 				<Value name="LANE_RIGHT_2" isDisabled ="lessThanThreeMultiTools">2</Value>
 			</Values>
 			<Texts>

@@ -24,9 +24,10 @@ function AIParameterSettingList.new(data,vehicle,class,customMt)
 		if self.texts ~= nil then
 			self.texts = table.copy(self.data.texts)
 		end
-		self.textInputAllowed = true
+		data.textInputAllowed = true
 	end
-
+	self.textInputAllowed = data.textInputAllowed
+--	self:debug("textInputAllowed: %s",tostring(self.textInputAllowed))
 	self.title = data.title
 	self.tooltip = data.tooltip
 
@@ -164,7 +165,7 @@ function AIParameterSettingList:isValueDisabled(value)
 			return true
 		end 
 	end
-	self:debug("value %s is valid",tostring(value))
+--	self:debug("value %s is valid",tostring(value))
 end
 
 --- Excludes deactivated values from the current values and texts tables.
@@ -380,6 +381,7 @@ end
 function AIParameterSettingList:registerMouseInputEvent()
 	local function mouseClick(element,superFunc,posX, posY, isDown, isUp, button, eventUsed)
 		local eventUsed = superFunc(element,posX, posY, isDown, isUp, button, eventUsed)
+	--	CpUtil.debugFormat(CpDebug.DBG_HUD,"Settings text pressed, pre event used: %s",tostring(eventUsed))
 		local x, y = unpack(element.textElement.absPosition)
 		local width, height = unpack(element.textElement.absSize)
 		local cursorInElement = GuiUtils.checkOverlayOverlap(posX, posY, x, y, width, height)

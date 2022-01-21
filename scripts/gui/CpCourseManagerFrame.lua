@@ -160,7 +160,7 @@ function CpCourseManagerFrame:onGuiSetupFinished()
 			--- Moves an entry
 			{
 				profile = "buttonActivate",
-				inputAction = InputAction.MENU_ACTIVATE,
+				inputAction = InputAction.MENU_CANCEL,
 				text = g_i18n:getText(self.translations.moveEntry),
 				callback = function ()
 					self.actionState = self.actionStates.moveEntrySelect

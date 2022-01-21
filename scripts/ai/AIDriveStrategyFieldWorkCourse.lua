@@ -62,12 +62,13 @@ end
 
 function AIDriveStrategyFieldWorkCourse:getGeneratedCourse(jobParameters)
     local course = self.vehicle:getFieldWorkCourse()
-    local laneNumber = jobParameters.laneOffset:getValue()
-    local width = course:getWorkWidth() / course:getNumberOfMultiTools()
-    local offsetCourse = course:calculateOffsetCourse(
-                                            course:getNumberOfMultiTools(),
-                                            laneNumber, width,
-                                            self.settings.symmetricLaneChange:getValue())
+    local numMultiTools = course:getNumberOfMultiTools()
+    --- Lane number needs to be zero for only one vehicle.
+    local laneNumber = numMultiTools > 1 and jobParameters.laneOffset:getValue() or 0
+    --- Work width of a single vehicle.
+    local width = course:getWorkWidth() / numMultiTools
+    local offsetCourse = course:calculateOffsetCourse(numMultiTools, laneNumber, width,
+                                                    self.settings.symmetricLaneChange:getValue())
     
     return offsetCourse
 end

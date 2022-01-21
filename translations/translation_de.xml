@@ -28,8 +28,10 @@
 		<text name="CP_jobParameters_laneOffset_title"													text="Lane offset:" />
 		<text name="CP_jobParameters_laneOffset_tooltip"												text="Lane offset" />
 		<text name="CP_jobParameters_laneOffset_center"													text="center" />
-		<text name="CP_jobParameters_laneOffset_left"													text="left" />
-		<text name="CP_jobParameters_laneOffset_right"													text="right" />
+		<text name="CP_jobParameters_laneOffset_left"													text="left(1)" />
+		<text name="CP_jobParameters_laneOffset_right"													text="right(1)" />
+		<text name="CP_jobParameters_laneOffset_left_2"													text="left(2)" />
+		<text name="CP_jobParameters_laneOffset_right_2"												text="right(2)" />
 
 	<!-- CP Jobs -->
 		<text name="CP_job_fieldWork"																	text="CP: Feldarbeit" />
@@ -202,6 +204,9 @@
 		<text name="CP_vehicle_courseGeneratorSetting_startOnHeadland_tooltip"							text="Startpunkt auf dem Vorgewende oder auf den Bahnen" />
 		<text name="CP_vehicle_courseGeneratorSetting_startOnHeadland_on_headland" 						text="Vorgewende" />
 		<text name="CP_vehicle_courseGeneratorSetting_startOnHeadland_up_down_rows" 					text="Bahnen" />
+
+		<text name="CP_vehicle_courseGeneratorSetting_multiTools_title"									text="Multiple tools" />
+		<text name="CP_vehicle_courseGeneratorSetting_multiTools_tooltip"								text="Number of vehicles on the same course." />
 
 	<!-- GlobalSettings -->
 		<text name="CP_global_setting_title"															text="Globale Einstellungen"/>
